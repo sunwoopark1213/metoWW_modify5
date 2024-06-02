@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background shape with rounded corners -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#D4F4FE"/> <!-- 반투명 검정색 그림자 -->
+            <corners android:radius="16dp"/>
+        </shape>
+    </item>
+
+</layer-list>

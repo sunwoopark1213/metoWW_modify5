@@ -34,6 +34,8 @@ public class AirQualityActivity extends AppCompatActivity {
         tvWarnings = findViewById(R.id.tvWarnings);
 
         fetchAirQualityData();
+
+        getWindow().getDecorView().setBackgroundColor(WeatherBackgroundManager.getInstance().getBackgroundColor());
     }
 
     private void fetchAirQualityData() {

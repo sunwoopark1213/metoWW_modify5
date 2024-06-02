@@ -31,6 +31,8 @@ public class PollenForecastActivity extends AppCompatActivity {
         pollenContainer = findViewById(R.id.pollenContainer);
 
         fetchPollenData();
+
+        getWindow().getDecorView().setBackgroundColor(WeatherBackgroundManager.getInstance().getBackgroundColor());
     }
 
     private void fetchPollenData() {

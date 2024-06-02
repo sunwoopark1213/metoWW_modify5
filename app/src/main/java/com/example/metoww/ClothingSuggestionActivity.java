@@ -2,6 +2,7 @@ package com.example.metoww;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,8 @@ public class ClothingSuggestionActivity extends AppCompatActivity {
         ivClothingImage = findViewById(R.id.ivClothingImage);
 
         fetchWeatherData();
+
+        getWindow().getDecorView().setBackgroundColor(WeatherBackgroundManager.getInstance().getBackgroundColor());
     }
 
     private void fetchWeatherData() {

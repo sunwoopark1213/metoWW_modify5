@@ -7,7 +7,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,15 +58,14 @@ public class HomeFragment extends Fragment {
 
         tvCityName = view.findViewById(R.id.tvCityName);
         tvTemperature = view.findViewById(R.id.tvTemperature);
-        tvWeather = view.findViewById(R.id.tvWeather);
         tvMinMaxTemp = view.findViewById(R.id.tvMinMaxTemp);
-        tvWind = view.findViewById(R.id.tvWind);
-        tvHumidity = view.findViewById(R.id.tvHumidity);
-        tvPrecipitation = view.findViewById(R.id.tvPrecipitation);
+        tvWind = view.findViewById(R.id.windSpeed);
+        tvHumidity = view.findViewById(R.id.humi);
+        tvPrecipitation = view.findViewById(R.id.rain);
         ivWeatherIcon = view.findViewById(R.id.ivWeatherIcon);
         btnClothingSuggestion = view.findViewById(R.id.btnClothingSuggestion);
-        btnOpenAirQuality = view.findViewById(R.id.btnOpenAirQuality);
-        btnPollenForecast = view.findViewById(R.id.btnPollenForecast);
+        btnOpenAirQuality = view.findViewById(R.id.btnAir);
+        btnPollenForecast = view.findViewById(R.id.btnPollen);
         forecastContainer = view.findViewById(R.id.forecastContainer);
 
         btnClothingSuggestion.setOnClickListener(v -> openClothingSuggestionActivity());
@@ -158,10 +156,19 @@ public class HomeFragment extends Fragment {
         int windDirection = currentWeather.getInt("wind_direction_10m");
 
         // Set current weather data
-        tvTemperature.setText("온도: " + temperature + "°C");
-        tvHumidity.setText("습도: " + humidity + "%");
-        tvPrecipitation.setText("강수량: " + precipitation + "mm");
-        tvWind.setText("풍속: " + windSpeed + " m/s, 방향: " + windDirection + "°");
+        tvTemperature.setText(temperature + "°C");
+        tvHumidity.setText(humidity + "%");
+        tvPrecipitation.setText(precipitation + "mm");
+        tvWind.setText(windSpeed + " m/s");
+
+        WeatherBackgroundManager.getInstance().setBackgroundColor(weatherCode);
+
+        int background = WeatherBackgroundManager.getInstance().getBackgroundColor();
+
+        View view = getView();
+        if (view != null) {
+            view.setBackgroundColor(background);
+        }
 
         // Fetch daily weather data
         JSONObject dailyWeather = response.getJSONObject("daily");
@@ -175,8 +182,7 @@ public class HomeFragment extends Fragment {
             double tempMin = tempMinArray.getDouble(0);
             int dailyWeatherCode = weatherCodeArray.getInt(0);
 
-            tvMinMaxTemp.setText("최고/최저 온도: " + tempMax + "°C / " + tempMin + "°C");
-            tvWeather.setText("날씨: " + getWeatherDescription(dailyWeatherCode));
+            tvMinMaxTemp.setText("최고 온도: " + tempMax + "°C"  +"\n최저 온도: "+ tempMin + "°C");
 
             // Set weather icon based on weather code
             ivWeatherIcon.setImageResource(getWeatherIcon(dailyWeatherCode));

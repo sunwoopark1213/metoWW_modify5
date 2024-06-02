@@ -98,6 +98,8 @@ public class CalendarFragment extends Fragment {
 
         fetchWeatherData();
 
+        view.setBackgroundColor(WeatherBackgroundManager.getInstance().getBackgroundColor());
+
         return view;
     }
 
