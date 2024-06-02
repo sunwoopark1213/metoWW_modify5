@@ -16,7 +16,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PollenForecastActivity extends AppCompatActivity {
@@ -42,12 +41,7 @@ public class PollenForecastActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            displayPollenData(response);
-                        } catch (JSONException e) {
-                            Log.e("PollenForecastActivity", "JSON Parsing error: ", e);
-                            Toast.makeText(PollenForecastActivity.this, "Error parsing JSON data", Toast.LENGTH_SHORT).show();
-                        }
+                        displayPollenData(response);
                     }
                 }, new Response.ErrorListener() {
 
@@ -61,36 +55,67 @@ public class PollenForecastActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
-    private void displayPollenData(JSONObject response) throws JSONException {
-        JSONObject hourly = response.getJSONObject("hourly");
-        JSONArray timeArray = hourly.getJSONArray("time");
-        JSONArray alderPollenArray = hourly.getJSONArray("alder_pollen");
-        JSONArray birchPollenArray = hourly.getJSONArray("birch_pollen");
-        JSONArray grassPollenArray = hourly.getJSONArray("grass_pollen");
-        JSONArray mugwortPollenArray = hourly.getJSONArray("mugwort_pollen");
-        JSONArray olivePollenArray = hourly.getJSONArray("olive_pollen");
-        JSONArray ragweedPollenArray = hourly.getJSONArray("ragweed_pollen");
+    private void displayPollenData(JSONObject response) {
+        Log.d("PollenForecastActivity", "API Response: " + response.toString());
+
+        if (!response.has("hourly")) {
+            Log.e("PollenForecastActivity", "JSON Response does not have 'hourly' key.");
+            Toast.makeText(this, "Error: Invalid data structure", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        JSONObject hourly = response.optJSONObject("hourly");
+
+        JSONArray timeArray = hourly.optJSONArray("time");
+        JSONArray alderPollenArray = hourly.optJSONArray("alder_pollen");
+        JSONArray birchPollenArray = hourly.optJSONArray("birch_pollen");
+        JSONArray grassPollenArray = hourly.optJSONArray("grass_pollen");
+        JSONArray mugwortPollenArray = hourly.optJSONArray("mugwort_pollen");
+        JSONArray olivePollenArray = hourly.optJSONArray("olive_pollen");
+        JSONArray ragweedPollenArray = hourly.optJSONArray("ragweed_pollen");
+
+        if (timeArray == null || alderPollenArray == null || birchPollenArray == null ||
+                grassPollenArray == null || mugwortPollenArray == null || olivePollenArray == null || ragweedPollenArray == null) {
+            Log.e("PollenForecastActivity", "One or more JSON arrays are null.");
+            Toast.makeText(this, "Error: Missing data in response", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int arrayLength = timeArray.length();
+        if (alderPollenArray.length() != arrayLength || birchPollenArray.length() != arrayLength ||
+                grassPollenArray.length() != arrayLength || mugwortPollenArray.length() != arrayLength ||
+                olivePollenArray.length() != arrayLength || ragweedPollenArray.length() != arrayLength) {
+            Log.e("PollenForecastActivity", "JSON arrays have inconsistent lengths.");
+            Toast.makeText(this, "Error: Inconsistent data lengths", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         pollenContainer.removeAllViews();
 
-        for (int i = 0; i < timeArray.length(); i++) {
-            String time = timeArray.getString(i);
+        for (int i = 0; i < arrayLength; i++) {
+            String time = timeArray.optString(i);
             if (time.endsWith("14:00")) { // Filter for 2 PM data
                 String date = time.substring(0, 10);
-                double alderPollen = alderPollenArray.getDouble(i);
-                double birchPollen = birchPollenArray.getDouble(i);
-                double grassPollen = grassPollenArray.getDouble(i);
-                double mugwortPollen = mugwortPollenArray.getDouble(i);
-                double olivePollen = olivePollenArray.getDouble(i);
-                double ragweedPollen = ragweedPollenArray.getDouble(i);
+                double alderPollen = alderPollenArray.optDouble(i, -1);
+                double birchPollen = birchPollenArray.optDouble(i, -1);
+                double grassPollen = grassPollenArray.optDouble(i, -1);
+                double mugwortPollen = mugwortPollenArray.optDouble(i, -1);
+                double olivePollen = olivePollenArray.optDouble(i, -1);
+                double ragweedPollen = ragweedPollenArray.optDouble(i, -1);
+
+                if (alderPollen == -1 || birchPollen == -1 || grassPollen == -1 ||
+                        mugwortPollen == -1 || olivePollen == -1 || ragweedPollen == -1) {
+                    Log.e("PollenForecastActivity", "Invalid data at index: " + i);
+                    continue;
+                }
 
                 String pollenInfo = "Date: " + date + "\n" +
-                        "Alder: " + alderPollen + "\n" +
-                        "Birch: " + birchPollen + "\n" +
-                        "Grass: " + grassPollen + "\n" +
-                        "Mugwort: " + mugwortPollen + "\n" +
-                        "Olive: " + olivePollen + "\n" +
-                        "Ragweed: " + ragweedPollen;
+                        "오리나무: " + alderPollen + "\n" +
+                        "자작나무: " + birchPollen + "\n" +
+                        "잔디: " + grassPollen + "\n" +
+                        "쑥: " + mugwortPollen + "\n" +
+                        "올리브: " + olivePollen + "\n" +
+                        "돼지풀: " + ragweedPollen;
 
                 TextView pollenTextView = new TextView(this);
                 pollenTextView.setText(pollenInfo);

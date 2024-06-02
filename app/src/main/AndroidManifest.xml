@@ -44,5 +44,10 @@
             android:name=".PollenForecastActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".ClothingSuggestionActivity"
+            android:exported="true">
+        </activity>
+
     </application>
 </manifest>

@@ -1,90 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvCityName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="City Name"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/tvTemperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Temperature"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/tvWeather"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Weather"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/tvMinMaxTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Min/Max Temperature"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/tvWind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Wind"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/tvHumidity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Humidity"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/tvPrecipitation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Precipitation"
-        android:textSize="24sp" />
-
-    <ImageView
-        android:id="@+id/ivWeatherIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_unknown" />
-
     <LinearLayout
-        android:id="@+id/forecastContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="16dp" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnOpenCalendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Open Calendar" />
+        <TextView
+            android:id="@+id/tvCityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="도시이름"
+            android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/btnOpenAirQuality"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Open Air Quality" />
+        <TextView
+            android:id="@+id/tvTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="온도"
+            android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/btnPollenForecast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pollen Forecast" />
+        <TextView
+            android:id="@+id/tvWeather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날씨"
+            android:textSize="18sp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvMinMaxTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="최저/최고 온도"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvWind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="풍속"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvHumidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="습도"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvPrecipitation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="강수량"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/ivWeatherIcon"
+            android:layout_width="144dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_unknown" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:id="@+id/forecastContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btnClothingSuggestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="기온별 옷차림" />
+
+            <Button
+                android:id="@+id/btnOpenAirQuality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="공기질" />
+
+            <Button
+                android:id="@+id/btnPollenForecast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="꽃가루 알레르기" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

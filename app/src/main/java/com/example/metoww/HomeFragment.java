@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -45,13 +47,14 @@ public class HomeFragment extends Fragment {
     private FusedLocationProviderClient fusedLocationClient;
     private TextView tvCityName, tvTemperature, tvWeather, tvMinMaxTemp, tvWind, tvHumidity, tvPrecipitation;
     private ImageView ivWeatherIcon;
-    private Button btnOpenCalendar, btnOpenAirQuality, btnPollenForecast;
+    private Button btnClothingSuggestion, btnOpenAirQuality, btnPollenForecast;
     private LinearLayout forecastContainer;
     private double latitude = 37.566;
     private double longitude = 126.9784;
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         tvCityName = view.findViewById(R.id.tvCityName);
@@ -62,31 +65,14 @@ public class HomeFragment extends Fragment {
         tvHumidity = view.findViewById(R.id.tvHumidity);
         tvPrecipitation = view.findViewById(R.id.tvPrecipitation);
         ivWeatherIcon = view.findViewById(R.id.ivWeatherIcon);
-        btnOpenCalendar = view.findViewById(R.id.btnOpenCalendar);
+        btnClothingSuggestion = view.findViewById(R.id.btnClothingSuggestion);
         btnOpenAirQuality = view.findViewById(R.id.btnOpenAirQuality);
         btnPollenForecast = view.findViewById(R.id.btnPollenForecast);
         forecastContainer = view.findViewById(R.id.forecastContainer);
 
-        btnOpenCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCalendarActivity();
-            }
-        });
-
-        btnOpenAirQuality.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openAirQualityActivity();
-            }
-        });
-
-        btnPollenForecast.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPollenForecastActivity();
-            }
-        });
+        btnClothingSuggestion.setOnClickListener(v -> openClothingSuggestionActivity());
+        btnOpenAirQuality.setOnClickListener(v -> openAirQualityActivity());
+        btnPollenForecast.setOnClickListener(v -> openPollenForecastActivity());
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         getLastKnownLocation();
@@ -220,8 +206,8 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void openCalendarActivity() {
-        Intent intent = new Intent(getActivity(), CalendarActivity.class);
+    private void openClothingSuggestionActivity() {
+        Intent intent = new Intent(getActivity(), ClothingSuggestionActivity.class);
         startActivity(intent);
     }
 

@@ -1,30 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <CalendarView
-        android:id="@+id/calendarView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:dateTextAppearance="?android:attr/textAppearanceLarge" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/weatherIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_unknown" />
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/weatherDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:text="Weather Description"
-        android:textSize="24sp" />
-</LinearLayout>
+        <ImageView
+            android:id="@+id/weatherIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_unknown" />
+
+        <TextView
+            android:id="@+id/weatherDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날씨"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/maxTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="최고온도"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/minTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="최저온도"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/memoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="메모:"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btnAddMemo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="메모 추가" />
+
+            <Button
+                android:id="@+id/btnEditMemo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="메모 편집" />
+
+            <Button
+                android:id="@+id/btnDeleteMemo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="메모 삭제" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
